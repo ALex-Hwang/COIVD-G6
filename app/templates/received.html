@@ -1,0 +1,63 @@
+{% extends "framework.html" %}
+{% block content %}
+<!-- This part is the body of the website. Just simply replace the follwoing comments with your own codes. Attentnion: no <body> </body> part is needed-->
+<div class="offset-1">
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link" href="#">申领进行中</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">已申领</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">未申领</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">中签</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#">待收货</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link active" href="#">已收货</a>
+  </li>
+</ul>
+</div>
+
+<hr />
+
+<div class="col-10 offset-1 " >
+<div class="list-group">
+  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">物资名称1</h5>
+    </div>
+    <div><small>每人限领：？只</small></div>
+    <div><small>申领截至时间：</small></div>
+    <div> <small>当前状态：已收货</small></div>
+      <hr />
+      <div class="offset-11"><button type="button" class="btn btn-warning ">投诉</button></div>
+  </a>
+  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">物资名称2</h5>
+    </div>
+    <div><small>每人限领：？只</small></div>
+    <div><small>申领截至时间：</small></div>
+    <div> <small>当前状态：已收货</small></div>
+      <hr />
+      <div class="offset-11"><button type="button" class="btn btn-warning ">投诉</button></div>
+  </a>
+  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">物资名称3</h5>
+    </div>
+    <div><small>每人限领：？只</small></div>
+    <div><small>申领截至时间：</small></div>
+    <div> <small>当前状态：已收货</small></div>
+      <hr />
+      <div class="offset-11"><button type="button" class="btn btn-warning ">投诉</button></div>
+  </a>
+</div>
+    </div>
+{% endblock content %}

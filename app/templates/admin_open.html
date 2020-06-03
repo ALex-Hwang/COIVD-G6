@@ -1,0 +1,49 @@
+{% extends "framework.html" %}
+{% block content %}
+<!-- This part is the body of the website. Just simply replace the follwoing comments with your own codes. Attentnion: no <body> </body> part is needed-->
+<div class="offset-1">
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">发布申领入口</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">查看中签信息</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">投诉处理</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">物资入库</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#">发货处理</a>
+    </li>
+</ul>
+</div>
+
+<hr />
+
+<div class="col-10 offset-1 container  shadow-sm bg-warm"  >
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">物资名称</span>
+  </div>
+  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon2">每人限领数量</span>
+  </div>
+    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+</div>
+
+    <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon3">申领截至时间</span>
+  </div>
+    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon3">
+</div>
+    <div class="offset-11"><button type="button" class="btn btn-primary ">发布</button></div>
+    </div>
+{% endblock content %}
