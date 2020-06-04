@@ -8,7 +8,7 @@ db = SQLAlchemy(app)
 
 
 @app.route('/', methods=['GET', 'POST'])
-def index():
- return render_template('received.html')
+def test():
+    return render_template('supply.html')
 
-from app import models
+from app import models, views

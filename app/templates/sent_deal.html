@@ -4,23 +4,20 @@
 <div class="offset-1">
 <ul class="nav nav-pills">
   <li class="nav-item">
-    <a class="nav-link active" href="#">申领进行中</a>
+    <a class="nav-link" href="{{url_for('admin.admin_open')}}">发布申领入口</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{{url_for('user.required')}}">已申领</a>
+    <a class="nav-link" href="{{url_for('admin.view_win')}}">查看中签信息</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{{url_for('user.norequire')}}">未申领</a>
+    <a class="nav-link" href="{{url_for('admin.complain_deal')}}">投诉处理</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{{url_for('user.win')}}">中签</a>
+    <a class="nav-link" href="{{url_for('admin.putin')}}">物资入库</a>
   </li>
     <li class="nav-item">
-    <a class="nav-link" href="{{url_for('user.wait_receive')}}">待收货</a>
-  </li>
-    <li class="nav-item">
-    <a class="nav-link" href="{{url_for('user.received')}}">已收货</a>
-  </li>
+    <a class="nav-link active" href="#">发货处理</a>
+    </li>
 </ul>
 </div>
 
@@ -34,31 +31,28 @@
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">物资名称1</h5>
     </div>
-    <div><small>每人领取数量：？只</small></div>
-    <div><small>申领截至时间：</small></div>
-    <div> <small>当前状态：</small></div>
+    <div><h6 class="mb-1">编号：</h6></div>
+     <div><h6 class="mb-1">发货总数：</h6></div>
       <hr />
-      <div class="offset-11"><button type="button" class="btn btn-success ">申领</button></div>
+      <div class="offset-11"><button type="button" class="btn btn-primary ">已发货</button></div>
   </a>
   <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">物资名称2</h5>
     </div>
-    <div><small>每人领取数量：？只</small></div>
-    <div><small>申领截至时间：</small></div>
-    <div> <small>当前状态：</small></div>
+    <div><h6 class="mb-1">编号：</h6></div>
+      <div><h6 class="mb-1">发货总数：</h6></div>
       <hr />
-      <div class="offset-11"><button type="button" class="btn btn-success ">申领</button></div>
+      <div class="offset-11"><button type="button" class="btn btn-primary ">已发货</button></div>
   </a>
   <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">物资名称3</h5>
     </div>
-    <div><small>每人领取数量：？只</small></div>
-    <div><small>申领截至时间：</small></div>
-    <div> <small>当前状态：</small></div>
+    <div><h6 class="mb-1">编号：</h6></div>
+      <div><h6 class="mb-1">发货总数：</h6></div>
       <hr />
-      <div class="offset-11"><button type="button" class="btn btn-success ">申领</button></div>
+      <div class="offset-11"><button type="button" class="btn btn-primary ">已发货</button></div>
   </a>
 </div>
     </div>
