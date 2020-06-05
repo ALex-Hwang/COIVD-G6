@@ -1,4 +1,6 @@
-from flask import Flask, render_template, url_for,redirect, Blueprint
+from flask import Flask, render_template, url_for,redirect, Blueprint, request, flash
+from app import db
+from app.models import WareHouse
 
 admin = Blueprint('admin', __name__)
 
@@ -19,8 +21,23 @@ def view_win():
 def complain_deal():
     return render_template('complain_deal.html')
 
-@admin.route("/putin")
+@admin.route("/putin", methods=('GET', 'POST'))
 def putin():
+    if request.method == 'POST':
+        name = request.form['goodsname']
+        number = request.form['number']
+        usage = request.form['usage']
+        
+        q_id = WareHouse.query.filter(WareHouse.Goodsname==name).first()
+        if not q_id:
+            newObj = WareHouse(Goodsname=name, number=number, usage=usage)
+            db.session.add(newObj)
+            db.session.commit()
+            flash('提交成功')
+        else:
+            q_id.number += int(number);
+            db.session.commit()
+            flash('该物资存在, 修改数量成功')
     return render_template('putin.html')
 
 @admin.route("/sent_deal")

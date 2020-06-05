@@ -25,7 +25,12 @@ class OrderInfo(db.Model):
     def __repr__(self):
         return '<Goods %r>' % self.id
 
+class WareHouse(db.Model):
+    __tablename__ = 'WareHouse'
+    Goodsname = db.Column(db.String(10), primary_key=True, nullable=False, unique=True)
+    number = db.Column(db.Integer, nullable=False, unique=False)
+    usage = db.Column(db.String(50), nullable=False) 
 
-    
-
+    def __repr__(self):
+        return '<Goods %r>' % self.id
 
