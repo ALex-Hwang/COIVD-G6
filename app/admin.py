@@ -15,7 +15,15 @@ def admin_open():
 
 @admin.route("/view_win")
 def view_win():
-    return render_template('view_win.html')
+    goods = WareHouse.query.all();
+    return render_template('view_win.html', goods=goods)
+
+@admin.route("/delete/<goodsname>", methods=('POST', ))
+def delete(goodsname):
+    d = WareHouse.query.filter(WareHouse.Goodsname==goodsname).first()
+    db.session.delete(d)
+    db.session.commit()
+    return redirect(url_for('admin.view_win'))
 
 @admin.route("/complain_deal")
 def complain_deal():
@@ -35,9 +43,7 @@ def putin():
             db.session.commit()
             flash('提交成功')
         else:
-            q_id.number += int(number);
-            db.session.commit()
-            flash('该物资存在, 修改数量成功')
+            flash('该物资存在')
     return render_template('putin.html')
 
 @admin.route("/sent_deal")

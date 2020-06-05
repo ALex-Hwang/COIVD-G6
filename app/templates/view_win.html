@@ -27,30 +27,21 @@
 </div>
 <div class="col-10 offset-1" >
 <div class="list-group">
+{% if goods%}
+    {% for u in goods %}
   <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称1</h5>
+			<h5 class="mb-1">{{u.Goodsname}}</h5>
     </div>
-    <div><h6 class="mb-1">编号：</h6></div>
+	<div><h6 class="mb-1">数量：{{u.number}}</h6></div>
       <hr />
-      <div class="offset-10"><button type="button" class="btn btn-primary ">查看中签信息</button></div>
+		 <form action="{{ url_for('admin.delete', goodsname=u.Goodsname)}}" method="post">
+		 <div class="offset-10"><button type="submit" class="btn btn-primary " onclick="return confirm('你确定要删除吗')" >删除</button></div>
+  </form>
   </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称2</h5>
-    </div>
-    <div><h6 class="mb-1">编号：</h6></div>
-      <hr />
-      <div class="offset-10"><button type="button" class="btn btn-primary ">查看中签信息</button></div>
-  </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称3</h5>
-    </div>
-    <div><h6 class="mb-1">编号：</h6></div>
-      <hr />
-      <div class="offset-10"><button type="button" class="btn btn-primary ">查看中签信息</button></div>
-  </a>
+    {% endfor %}
+{% endif %}
 </div>
     </div>
+
 {% endblock content %}
