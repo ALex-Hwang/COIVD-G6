@@ -25,7 +25,36 @@ class OrderInfo(db.Model):
     def __repr__(self):
         return '<Goods %r>' % self.id
 
+class OrderProcess(db.Model):
+    __tablename__ = 'OrderProcess'
+    id = db.Column(db.String(20), db.ForeignKey('OrderInfo.id'), nullable=False, primary_key=True)
+    IDNumber = db.Column(db.String(18), db.ForeignKey('Admin.id'), nullable=False)
+    ProcessTime = db.Column(db.Date, nullable=False)
+    DeliveryTime = db.Column(db.Date, nullable=True)
+    ReceiveTime = db.Column(db.Date, nullable=True)
+    CancelTime = db.Column(db.Date, nullable=True)
+    OrderState = db.Column(db.Integer, nullable=False)
 
+    def __repr__(self):
+        return '<Goods %r>' % self.id
+
+class Complaint(db.Model):
+    __tablename__ = 'Complaint'
+    id = db.Column(db.String(20), primary_key=True, nullable=False, unique=True)
+    IDNumber = db.Column(db.String(18), db.ForeignKey('User.id'), nullable=False)
+    CreateTime = db.Column(db.Date, nullable=True)
+    ComplaintReason = db.Column(db.Integer, nullable=False)
+    Content = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return '<Goods %r>' % self.id
+
+class ComplaintProcess(db.Model):
+    id = db.Column(db.String(20), db.ForeignKey('Complaint.id'), primary_key=True, nullable=False, unique=True)
+    IDNumber = db.Column(db.String(18), db.ForeignKey('Admin.id'), nullable=False)
+    ProcessTime = db.Column(db.Date, nullable=False)
+    CancelTime = db.Column(db.Date, nullable=True)
+    ComplaintState = db.Column(db.Integer, nullable=False)
     
-
-
+    def __repr__(self):
+        return '<Goods %r>' % self.id
