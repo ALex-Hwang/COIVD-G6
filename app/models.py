@@ -36,7 +36,7 @@ class OrderProcess(db.Model):
     OrderState = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return '<Goods %r>' % self.id
+        return '<OrderProcess %r>' % self.id
 
 class Complaint(db.Model):
     __tablename__ = 'Complaint'
@@ -47,7 +47,7 @@ class Complaint(db.Model):
     Content = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
-        return '<Goods %r>' % self.id
+        return '<Complaint %r>' % self.id
 
 class ComplaintProcess(db.Model):
     id = db.Column(db.String(20), db.ForeignKey('Complaint.id'), primary_key=True, nullable=False, unique=True)
@@ -55,6 +55,6 @@ class ComplaintProcess(db.Model):
     ProcessTime = db.Column(db.Date, nullable=False)
     CancelTime = db.Column(db.Date, nullable=True)
     ComplaintState = db.Column(db.Integer, nullable=False)
-    
+
     def __repr__(self):
-        return '<Goods %r>' % self.id
+        return '<ComplaintProcess %r>' % self.id
