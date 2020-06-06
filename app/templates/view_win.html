@@ -33,11 +33,10 @@
     <div class="d-flex w-100 justify-content-between">
 			<h5 class="mb-1">{{u.Goodsname}}</h5>
     </div>
-	<div><h6 class="mb-1">数量：{{u.number}}</h6></div>
+	<div><h6 class="mb-1">数量：{{u.OrderLimit}}</h6></div>
+	<div><h6 class="mb-1">截止时间：{{u.DDL}}</h6></div>
       <hr />
-		 <form action="{{ url_for('admin.delete', goodsname=u.Goodsname)}}" method="post">
-		 <div class="offset-10"><button type="submit" class="btn btn-primary " onclick="return confirm('你确定要删除吗')" >删除</button></div>
-  </form>
+		 <div class="offset-10"><button type="submit" class="btn btn-primary " >查看中签信息</button></div>
   </a>
     {% endfor %}
 {% endif %}
