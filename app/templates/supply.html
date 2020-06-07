@@ -26,43 +26,26 @@
 
 <hr />
 <div class="col-3 offset-9">
-    <p class="font-weight-bold">物资数量：</p>
+    <p class="font-weight-bold">物资数量：{{ amount }}</p>
 </div>
 <div class="col-10 offset-1" >
 <div class="list-group">
+  {% if amount>0 %}
+  {% for good in goods %}
   <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称1</h5>
+      <h5 class="mb-1">物资名称 {{ good.GoodsName }}</h5>
     </div>
-    <div><small>每人领取数量：？只</small></div>
-    <div><small>发布总数：</small></div>
-    <div><small>申领截至时间：</small></div>
-    <div> <small>当前状态：</small></div>
+    <div><small>每人领取数量：{{ good.Stock }}只</small></div>
+    <div><small>申领截至时间：{{ good.DDL }}</small></div>
+    <div> <small>当前状态:</small></div>
       <hr />
       <div class="offset-11"><button type="button" class="btn btn-success ">申领</button></div>
   </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称2</h5>
-    </div>
-    <div><small>每人领取数量：？只</small></div>
-    <div><small>发布总数：</small></div>
-    <div><small>申领截至时间：</small></div>
-    <div> <small>当前状态：</small></div>
-      <hr />
-      <div class="offset-11"><button type="button" class="btn btn-success ">申领</button></div>
-  </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称3</h5>
-    </div>
-    <div><small>每人领取数量：？只</small></div>
-    <div><small>发布总数：</small></div>
-    <div><small>申领截至时间：</small></div>
-    <div> <small>当前状态：</small></div>
-      <hr />
-      <div class="offset-11"><button type="button" class="btn btn-success ">申领</button></div>
-  </a>
+  {% endfor %}
+  {% else %}
+  <h5 class="mb-1">当前没有发布任何申领信息</h5>
+  {% endif %}
 </div>
     </div>
 {% endblock content %}
