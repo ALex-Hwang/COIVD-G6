@@ -29,12 +29,27 @@ def view_win():
     goods = GoodsInfo.query.all();
     return render_template('view_win.html', goods=goods)
 
-@admin.route("/delete/<goodsname>", methods=('POST', 'GET'))
+@admin.route("/deleteWare/<goodsname>", methods=('POST', 'GET'))
 def delete(goodsname):
+    g = GoodsInfo.query.filter(GoodsInfo.Goodsname==goodsname).first()
+    if g:
+        flash("该物资已经发布，无法删除！", category='warning')
+        return redirect(url_for('admin.admin_open'))
     d = WareHouse.query.filter(WareHouse.Goodsname==goodsname).first()
     db.session.delete(d)
     db.session.commit()
+    flash("删除成功")
     return redirect(url_for('admin.admin_open'))
+
+
+@admin.route("/deleteGoodsInfo/<goodsname>", methods=('POST', 'GET'))
+def deleteGoodsInfo(goodsname):
+    g = GoodsInfo.query.filter(GoodsInfo.Goodsname==goodsname).first()
+    db.session.delete(g)
+    db.session.commit()
+    flash("删除成功")
+    return redirect(url_for('admin.view_win'))
+
 
 @admin.route("/complain_deal")
 def complain_deal():

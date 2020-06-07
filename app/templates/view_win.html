@@ -1,6 +1,17 @@
 {% extends "framework.html" %}
 {% block content %}
 <!-- This part is the body of the website. Just simply replace the follwoing comments with your own codes. Attentnion: no <body> </body> part is needed-->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul class="flash">
+        {% for message in messages %}
+            <div class="alert alert-success" style="text-align: center">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                <strong>{{ message }}</strong></div>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
 <div class="offset-1">
 <ul class="nav nav-pills">
   <li class="nav-item">
@@ -33,10 +44,14 @@
     <div class="d-flex w-100 justify-content-between">
 			<h5 class="mb-1">{{u.Goodsname}}</h5>
     </div>
-	<div><h6 class="mb-1">数量：{{u.OrderLimit}}</h6></div>
+	<div><h6 class="mb-1">物资编号：{{u.id}}</h6></div>
+  <div><h6 class="mb-1">数量：{{u.OrderLimit}}</h6></div>
+  <div><h6 class="mb-1">剩余数量：{{u.OrderLimit}}</h6></div>
 	<div><h6 class="mb-1">截止时间：{{u.DDL}}</h6></div>
       <hr />
-		 <div class="offset-10"><button type="submit" class="btn btn-primary " >查看中签信息</button></div>
+     <div class="offset-9"><button type="button" class="btn btn-danger "onclick="location='{{url_for('admin.deleteGoodsInfo', goodsname=u.Goodsname)}}'">撤销</button>
+      <button type="submit" class="btn btn-primary " >查看中签信息</button></div>
+        
   </a>
     {% endfor %}
 {% endif %}
