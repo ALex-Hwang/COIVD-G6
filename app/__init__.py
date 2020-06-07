@@ -8,8 +8,8 @@ app.secret_key = '123456'
 db = SQLAlchemy(app)
 
 
+from app import models, views
+
 @app.route('/', methods=['GET', 'POST'])
 def test():
-    return render_template('supply.html')
-
-from app import models, views
+    return render_template('supply.html', amount = models.GoodsInfo.query.count(), goods = models.GoodsInfo.query.all())

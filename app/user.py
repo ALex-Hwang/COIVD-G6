@@ -1,10 +1,11 @@
 from flask import Flask, render_template, url_for,redirect, Blueprint
+from app import models
 
 user = Blueprint('user', __name__)
 
 @user.route("/")
 def supply():
-    return render_template('supply.html')
+    return render_template('supply.html', amount = models.GoodsInfo.query.count(), goods = models.GoodsInfo.query.all())
 
 @user.route("/received")
 def received():
