@@ -15,11 +15,29 @@ def adminfirst():
 def admin_open():
     goods = WareHouse.query.all();
     if request.method=='POST':
+        Sum = request.form['sum']
         number = request.form['number']
         goodsname = request.form['goodsname']
         deadline = request.form['deadline']
-        newObj = GoodsInfo(Goodsname=goodsname, OrderLimit=number, DDL=deadline)
+        g = GoodsInfo.query.filter(GoodsInfo.Goodsname==goodsname).first()
+        o = WareHouse.query.filter(WareHouse.Goodsname==goodsname).first()
+        if int(Sum) > o.number:
+            flash("数量大于库存量，请重新输入!")
+            return render_template('admin_open.html', goods=goods)
+        if int(Sum) < int(number):
+            flash("个人申领数量大于可申领总数，请重新输入！")
+            return render_template('admin_open.html', goods=goods)
+        if g:
+            flash("该物资已经发布，添加数量成功！")
+            g.OrderLimit += int(Sum)
+            o.number -= int(Sum)
+            if o.number == 0: # when the number is zero.
+                db.session.delete(o)
+            db.session.commit()
+            return render_template('admin_open.html', goods=goods)
+        newObj = GoodsInfo(Goodsname=goodsname, OrderLimit=Sum, OrderLimitPerPerson = number, DDL=deadline)
         db.session.add(newObj)
+        o.number -= int(Sum)
         db.session.commit()
         return render_template('admin_open.html', goods=goods)
     return render_template('admin_open.html', goods=goods)
@@ -45,6 +63,8 @@ def delete(goodsname):
 @admin.route("/deleteGoodsInfo/<goodsname>", methods=('POST', 'GET'))
 def deleteGoodsInfo(goodsname):
     g = GoodsInfo.query.filter(GoodsInfo.Goodsname==goodsname).first()
+    p = WareHouse.query.filter(WareHouse.Goodsname==goodsname).first()
+    p.number += g.OrderLimit
     db.session.delete(g)
     db.session.commit()
     flash("删除成功")
