@@ -17,12 +17,15 @@ class GoodsInfo(db.Model):
 class OrderInfo(db.Model):
     __tablename__ = 'OrderInfo'
     id = db.Column(db.String(32), default=gen_id, primary_key=True)
-    idcard = db.Column(db.String(20), primary_key=False, nullable=False) # The IDNumber of the applicant
+    userid = db.Column(db.Integer, db.ForeignKey('user.id')) # The IDNumber of the applicant
     GoodsID = db.Column(db.String(10), db.ForeignKey('GoodsInfo.id'))
     Goodsname = db.Column(db.String(30))
     OrderNum = db.Column(db.Integer, nullable=False)
     CreateTime = db.Column(db.Date, nullable=False)
-
+    DeliveryTime = db.Column(db.Date, nullable=True)
+    ReceiveTime = db.Column(db.Date, nullable=True)
+    CancelTime = db.Column(db.Date, nullable=True)
+    OrderState = db.Column(db.Integer, nullable=False) # 0:等待抽签; 1:未发货; 2:已发货; 3:已送达; 4:已取消 
     def __repr__(self):
         return '<Goods %r>' % self.id
 
@@ -62,36 +65,14 @@ class WareHouse(db.Model):
     def __repr__(self):
         return '<Goods %r>' % self.Goodsname
 
-class OrderProcess(db.Model):
-    __tablename__ = 'OrderProcess'
-    id = db.Column(db.String(20), db.ForeignKey('OrderInfo.id'), nullable=False, primary_key=True)
-    ProcessTime = db.Column(db.Date, nullable=False)
-    DeliveryTime = db.Column(db.Date, nullable=True)
-    ReceiveTime = db.Column(db.Date, nullable=True)
-    CancelTime = db.Column(db.Date, nullable=True)
-    OrderState = db.Column(db.Integer, nullable=False) # 0: 未发货; 1: 已发货; 2: 已送达; 3: 已取消.
-
-    def __repr__(self):
-        return '<OrderProcess %r>' % self.id
 
 class Complaint(db.Model):
     __tablename__ = 'Complaint'
-    id = db.Column(db.String(20), primary_key=True, nullable=False, unique=True)
-    IDNumber = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    CreateTime = db.Column(db.Date, nullable=True)
+    id = db.Column(db.String(20), default=gen_id, primary_key=True)
+    userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     ComplaintReason = db.Column(db.Integer, nullable=False)
     Content = db.Column(db.Text, nullable=False)
-
-    def __repr__(self):
-        return '<Complaint %r>' % self.id
-
-class ComplaintProcess(db.Model):
-    id = db.Column(db.String(20), db.ForeignKey('Complaint.id'), primary_key=True, nullable=False, unique=True)
-    IDNumber = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable=False)
-    ProcessTime = db.Column(db.Date, nullable=False)
-    CancelTime = db.Column(db.Date, nullable=True)
     ComplaintState = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return '<ComplaintProcess %r>' % self.id
-
+        return '<Complaint %r>' % self.id

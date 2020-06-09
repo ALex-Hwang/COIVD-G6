@@ -20,7 +20,8 @@
     </li>
 </ul>
 </div>
-
+{% if orders%}
+    {% for u in orders %}
 <hr />
 <div class="col-3 offset-9">
     <p class="font-weight-bold">物资数量：</p>
@@ -29,31 +30,20 @@
 <div class="list-group">
   <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称1</h5>
+      <h5 class="mb-1">物资名称: {{u.Goodsname}}</h5>
     </div>
-    <div><h6 class="mb-1">编号：</h6></div>
-     <div><h6 class="mb-1">发货总数：</h6></div>
+    <div><h6 class="mb-1">订单编号：{{u.id}}</h6></div>
+     <!--<div><h6 class="mb-1">发货总数：</h6></div> -->
       <hr />
-      <div class="offset-11"><button type="button" class="btn btn-primary ">已发货</button></div>
+      <div class="offset-10">
+        <button type="button" class="btn btn-primary ">发货</button>
+        <button type="button" class="btn btn-primary ">一键发货</button>
+      </div>
   </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称2</h5>
-    </div>
-    <div><h6 class="mb-1">编号：</h6></div>
-      <div><h6 class="mb-1">发货总数：</h6></div>
-      <hr />
-      <div class="offset-11"><button type="button" class="btn btn-primary ">已发货</button></div>
-  </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称3</h5>
-    </div>
-    <div><h6 class="mb-1">编号：</h6></div>
-      <div><h6 class="mb-1">发货总数：</h6></div>
-      <hr />
-      <div class="offset-11"><button type="button" class="btn btn-primary ">已发货</button></div>
-  </a>
+  
 </div>
     </div>
+    {% endfor %}
+{% endif %}
+
 {% endblock content %}

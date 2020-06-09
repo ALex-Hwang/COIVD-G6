@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for,redirect, Blueprint, request, 
 from app import db
 from app.models import WareHouse
 from app.models import GoodsInfo
+from app.models import OrderInfo
 
 admin = Blueprint('admin', __name__)
 
@@ -96,5 +97,6 @@ def putin():
 
 @admin.route("/sent_deal")
 def sent_deal():
-    return render_template('sent_deal.html')
+    orders = OrderProcess.query.filter(OrderProcess.OrderState==0)
+    return render_template('sent_deal.html', orders=orders)
 
