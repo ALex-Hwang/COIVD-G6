@@ -68,7 +68,7 @@ class OrderProcess(db.Model):
     DeliveryTime = db.Column(db.Date, nullable=True)
     ReceiveTime = db.Column(db.Date, nullable=True)
     CancelTime = db.Column(db.Date, nullable=True)
-    OrderState = db.Column(db.Integer, nullable=False) //0: 未发货; 1: 已发货; 2: 已送达; 3: 已取消.
+    OrderState = db.Column(db.Integer, nullable=False) # 0: 未发货; 1: 已发货; 2: 已送达; 3: 已取消.
 
     def __repr__(self):
         return '<OrderProcess %r>' % self.id
