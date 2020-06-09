@@ -13,7 +13,7 @@ def adminfirst():
 
 @admin.route("/admin_open", methods=('GET', 'POST'))
 def admin_open():
-    goods = WareHouse.query.all();
+    goods = WareHouse.query.filter(WareHouse.number > 0);
     if request.method=='POST':
         Sum = request.form['sum']
         number = request.form['number']

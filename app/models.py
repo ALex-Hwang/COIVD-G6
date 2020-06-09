@@ -16,7 +16,7 @@ class GoodsInfo(db.Model):
 
 class OrderInfo(db.Model):
     __tablename__ = 'OrderInfo'
-    id = db.Column(db.String(20), primary_key=True, nullable=False, unique=True)
+    id = db.Column(db.String(32), default=gen_id, primary_key=True)
     idcard = db.Column(db.String(20), primary_key=False, nullable=False, unique=True) # The IDNumber of the applicant
     GoodsID = db.Column(db.String(10), db.ForeignKey('GoodsInfo.id'), unique=True)
     OrderNum = db.Column(db.Integer, nullable=False, unique=True)
