@@ -17,10 +17,10 @@ class GoodsInfo(db.Model):
 class OrderInfo(db.Model):
     __tablename__ = 'OrderInfo'
     id = db.Column(db.String(32), default=gen_id, primary_key=True)
-    idcard = db.Column(db.String(20), primary_key=False, nullable=False, unique=True) # The IDNumber of the applicant
-    GoodsID = db.Column(db.String(10), db.ForeignKey('GoodsInfo.id'), unique=True)
-    OrderNum = db.Column(db.Integer, nullable=False, unique=True)
-    CreateTime = db.Column(db.Date, nullable=False, unique=True)
+    idcard = db.Column(db.String(20), primary_key=False, nullable=False) # The IDNumber of the applicant
+    GoodsID = db.Column(db.String(10), db.ForeignKey('GoodsInfo.id'))
+    OrderNum = db.Column(db.Integer, nullable=False)
+    CreateTime = db.Column(db.Date, nullable=False)
 
     def __repr__(self):
         return '<Goods %r>' % self.id
