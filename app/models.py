@@ -19,7 +19,7 @@ class OrderInfo(db.Model):
     id = db.Column(db.String(32), default=gen_id, primary_key=True)
     idcard = db.Column(db.String(20), primary_key=False, nullable=False) # The IDNumber of the applicant
     GoodsID = db.Column(db.String(10), db.ForeignKey('GoodsInfo.id'))
-    Goodsnam = db.Column(db.String(30))
+    Goodsname = db.Column(db.String(30))
     OrderNum = db.Column(db.Integer, nullable=False)
     CreateTime = db.Column(db.Date, nullable=False)
 
