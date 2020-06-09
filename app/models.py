@@ -64,7 +64,6 @@ class WareHouse(db.Model):
 class OrderProcess(db.Model):
     __tablename__ = 'OrderProcess'
     id = db.Column(db.String(20), db.ForeignKey('OrderInfo.id'), nullable=False, primary_key=True)
-    IDNumber = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable=False)
     ProcessTime = db.Column(db.Date, nullable=False)
     DeliveryTime = db.Column(db.Date, nullable=True)
     ReceiveTime = db.Column(db.Date, nullable=True)
@@ -73,6 +72,7 @@ class OrderProcess(db.Model):
 
     def __repr__(self):
         return '<OrderProcess %r>' % self.id
+
 class Complaint(db.Model):
     __tablename__ = 'Complaint'
     id = db.Column(db.String(20), primary_key=True, nullable=False, unique=True)
