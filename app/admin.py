@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for,redirect, Blueprint, request, flash
 from app import db
+import time
 from app.models import WareHouse
 from app.models import GoodsInfo
 from app.models import OrderInfo
@@ -97,6 +98,24 @@ def putin():
 
 @admin.route("/sent_deal")
 def sent_deal():
-    orders = OrderProcess.query.filter(OrderProcess.OrderState==0)
+    orders = OrderInfo.query.filter(OrderInfo.OrderState==1)
     return render_template('sent_deal.html', orders=orders)
 
+@admin.route("/sending")
+def sending():
+    orders = OrderInfo.query.filter(OrderInfo.OrderState==2)
+    return render_template('sending.html', orders=orders)
+
+@admin.route("/completed")
+def completed():
+    orders = OrderInfo.query.filter(OrderInfo.OrderState==3)
+    return render_template('completed.html', orders=orders)
+
+@admin.route("/send/<orderid>")
+def send(orderid):
+    order = OrderInfo.query.filter(OrderInfo.id==orderid).first()
+    order.OrderState = 2
+    order.DeliveryTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    db.session.commit()
+    orders = OrderInfo.query.filter(OrderInfo.OrderState==1)
+    return redirect(url_for('admin.sent_deal'))

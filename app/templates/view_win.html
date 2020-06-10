@@ -27,15 +27,13 @@
     <a class="nav-link" href="{{url_for('admin.putin')}}">物资入库</a>
   </li>
     <li class="nav-item">
-    <a class="nav-link" href="{{url_for('admin.sent_deal')}}">发货处理</a>
+    <a class="nav-link" href="{{url_for('admin.sent_deal')}}">订单管理</a>
     </li>
 </ul>
 </div>
 
 <hr />
-<div class="col-3 offset-9">
-    <p class="font-weight-bold">物资数量：</p>
-</div>
+
 <div class="col-10 offset-1" >
 <div class="list-group">
 {% if goods%}

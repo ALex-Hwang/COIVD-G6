@@ -1,5 +1,7 @@
 from app import db
 import uuid
+
+
 def gen_id():
     return uuid.uuid4().hex[:10]
 
@@ -18,7 +20,7 @@ class OrderInfo(db.Model):
     __tablename__ = 'OrderInfo'
     id = db.Column(db.String(32), default=gen_id, primary_key=True)
     userid = db.Column(db.Integer, db.ForeignKey('user.id')) # The IDNumber of the applicant
-    GoodsID = db.Column(db.String(10), db.ForeignKey('GoodsInfo.id'))
+    GoodsID = db.Column(db.String(32), db.ForeignKey('GoodsInfo.id'))
     Goodsname = db.Column(db.String(30))
     OrderNum = db.Column(db.Integer, nullable=False)
     CreateTime = db.Column(db.Date, nullable=False)
