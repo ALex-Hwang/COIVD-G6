@@ -13,53 +13,31 @@
 		  <a class="nav-link active" href="{{url_for('admin.complain_deal')}}">投诉处理</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{{admin.url_for('putin')}}">物资入库</a>
+    <a class="nav-link" href="{{url_for('admin.putin')}}">物资入库</a>
   </li>
     <li class="nav-item">
-    <a class="nav-link" href="{{admin.url_for('sent_deal')}}">发货处理</a>
+    <a class="nav-link" href="{{url_for('admin.sent_deal')}}">订单管理</a>
     </li>
 </ul>
 </div>
 
 <hr />
-<div class="col-3 offset-9">
-    <p class="font-weight-bold">投诉数量：</p>
-</div>
+{% if complaints%}
+{% for u in complaints %}
 <div class="col-10 offset-1" >
 <div class="list-group">
   <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">投诉物资名称1</h5>
+      <h5 class="mb-1">投诉物资名称: {{u.Goodsname}}</h5>
     </div>
-    <div><h6 class="mb-1">投诉分类：</h6></div>
+    <div><h6 class="mb-1">投诉分类：{{u.ComplaintReason}}</h6></div>
       <hr />
       <div class="row justify-content-between">
           <div class="col-8"><button type="button" class="btn btn-warning " data-toggle="modal" data-target="#complain1">查看具体信息</button></div>
-          <div class="col-2 "><button type="button" class="btn btn-primary ">完成处理</button></div>
+          <div class="col-2 "><button type="button" class="btn btn-primary " onclick="location='{{url_for('admin.processComplaint', complaintid=u.id)}}'">完成处理</button></div>
       </div>
   </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-       <h5 class="mb-1">投诉物资名称2</h5>
-    </div>
-    <div><h6 class="mb-1">投诉分类：</h6></div>
-      <hr />
-      <div class="row justify-content-between">
-          <div class="col-8"><button type="button" class="btn btn-warning " data-toggle="modal" data-target="#complain1">查看具体信息</button></div>
-          <div class="col-2 "><button type="button" class="btn btn-primary ">完成处理</button></div>
-      </div>
-  </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-       <h5 class="mb-1">投诉物资名称3</h5>
-    </div>
-    <div><h6 class="mb-1">投诉分类：</h6></div>
-      <hr />
-      <div class="row justify-content-between">
-          <div class="col-8"><button type="button" class="btn btn-warning " data-toggle="modal" data-target="#complain1">查看具体信息</button></div>
-          <div class="col-2 "><button type="button" class="btn btn-primary ">完成处理</button></div>
-      </div>
-  </a>
+ 
 </div>
     </div>
 <div class="modal fade" id="complain1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -72,7 +50,7 @@
         </button>
       </div>
       <div class="modal-body">
-        投诉内容XXXXX
+        {{u.Content}}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">退出</button>
@@ -80,4 +58,6 @@
     </div>
   </div>
 </div>
+{% endfor %}
+{% endif %}
 {% endblock content %}

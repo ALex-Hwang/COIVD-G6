@@ -71,10 +71,11 @@ class WareHouse(db.Model):
 class Complaint(db.Model):
     __tablename__ = 'Complaint'
     id = db.Column(db.String(20), default=gen_id, primary_key=True)
-    userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    ComplaintReason = db.Column(db.Integer, nullable=False)
+    Orderid = db.Column(db.String(32), db.ForeignKey('OrderInfo.id'), nullable=False)
+    Goodsname = db.Column(db.String(30))
     Content = db.Column(db.Text, nullable=False)
-    ComplaintState = db.Column(db.Integer, nullable=False)
+    ComplaintReason = db.Column(db.Integer, nullable=False) #0: 物流问题; 1: 物资问题
+    ComplaintState = db.Column(db.Integer, nullable=False) #0: 未处理; 1: 已处理
 
     def __repr__(self):
         return '<Complaint %r>' % self.id

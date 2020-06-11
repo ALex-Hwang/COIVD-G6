@@ -4,13 +4,14 @@ import time
 from app.models import WareHouse
 from app.models import GoodsInfo
 from app.models import OrderInfo
+from app.models import Complaint
 
 admin = Blueprint('admin', __name__)
 
 
 @admin.route("/")
 def adminfirst():
-    return render_template('admin_open.html')
+    return render_template('admin/admin_open.html')
 
 
 @admin.route("/admin_open", methods=('GET', 'POST'))
@@ -25,10 +26,10 @@ def admin_open():
         o = WareHouse.query.filter(WareHouse.Goodsname==goodsname).first()
         if int(Sum) > o.number:
             flash("数量大于库存量，请重新输入!")
-            return render_template('admin_open.html', goods=goods)
+            return render_template('admin/admin_open.html', goods=goods)
         if int(Sum) < int(number):
             flash("个人申领数量大于可申领总数，请重新输入！")
-            return render_template('admin_open.html', goods=goods)
+            return render_template('admin/admin_open.html', goods=goods)
         if g:
             flash("该物资已经发布，添加数量成功！")
             g.OrderLimit += int(Sum)
@@ -36,18 +37,18 @@ def admin_open():
             if o.number == 0: # when the number is zero.
                 db.session.delete(o)
             db.session.commit()
-            return render_template('admin_open.html', goods=goods)
+            return render_template('admin/admin_open.html', goods=goods)
         newObj = GoodsInfo(Goodsname=goodsname, OrderLimit=Sum, OrderLimitPerPerson = number, DDL=deadline)
         db.session.add(newObj)
         o.number -= int(Sum)
         db.session.commit()
-        return render_template('admin_open.html', goods=goods)
-    return render_template('admin_open.html', goods=goods)
+        return render_template('admin/admin_open.html', goods=goods)
+    return render_template('admin/admin_open.html', goods=goods)
 
 @admin.route("/view_win")
 def view_win():
     goods = GoodsInfo.query.all();
-    return render_template('view_win.html', goods=goods)
+    return render_template('admin/view_win.html', goods=goods)
 
 @admin.route("/deleteWare/<goodsname>", methods=('POST', 'GET'))
 def delete(goodsname):
@@ -73,9 +74,10 @@ def deleteGoodsInfo(goodsname):
     return redirect(url_for('admin.view_win'))
 
 
-@admin.route("/complain_deal")
+@admin.route("/complain_deal") # 投诉处理
 def complain_deal():
-    return render_template('complain_deal.html')
+    complaints = Complaint.query.filter(Complaint.ComplaintState==0)
+    return render_template('admin/complain_deal.html', complaints=complaints)
 
 @admin.route("/putin", methods=('GET', 'POST'))
 def putin():
@@ -94,28 +96,34 @@ def putin():
             q_id.number += number
             db.session.commit()
             flash('该物资存在，已经更新数量')
-    return render_template('putin.html')
+    return render_template('admin/putin.html')
 
-@admin.route("/sent_deal")
+@admin.route("/sent_deal") # 订单提交成功界面
 def sent_deal():
     orders = OrderInfo.query.filter(OrderInfo.OrderState==1)
-    return render_template('sent_deal.html', orders=orders)
+    return render_template('admin/sent_deal.html', orders=orders)
 
-@admin.route("/sending")
+@admin.route("/sending") # 订单运输中界面
 def sending():
     orders = OrderInfo.query.filter(OrderInfo.OrderState==2)
-    return render_template('sending.html', orders=orders)
+    return render_template('admin/sending.html', orders=orders)
 
-@admin.route("/completed")
+@admin.route("/completed") # 订单完成界面 
 def completed():
     orders = OrderInfo.query.filter(OrderInfo.OrderState==3)
-    return render_template('completed.html', orders=orders)
+    return render_template('admin/completed.html', orders=orders)
 
-@admin.route("/send/<orderid>")
+@admin.route("/send/<orderid>") # 进行发货操作
 def send(orderid):
     order = OrderInfo.query.filter(OrderInfo.id==orderid).first()
     order.OrderState = 2
     order.DeliveryTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     db.session.commit()
-    orders = OrderInfo.query.filter(OrderInfo.OrderState==1)
     return redirect(url_for('admin.sent_deal'))
+
+@admin.route("/processComplaint/<complaintid>") #  处理投诉
+def processComplaint(complaintid):
+    complaint = Complaint.query.filter(Complaint.id==complaintid).first()
+    complaint.ComplaintState = 1
+    db.session.commit()
+    return redirect(url_for('admin.complain_deal')) 
