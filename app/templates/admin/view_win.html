@@ -44,11 +44,10 @@
     </div>
 	<div><h6 class="mb-1">物资编号：{{u.id}}</h6></div>
   <div><h6 class="mb-1">数量：{{u.OrderLimit}}</h6></div>
-  <div><h6 class="mb-1">剩余数量：{{u.OrderLimit}}</h6></div>
 	<div><h6 class="mb-1">截止时间：{{u.DDL}}</h6></div>
       <hr />
      <div class="offset-9"><button type="button" class="btn btn-danger "onclick="location='{{url_for('admin.deleteGoodsInfo', goodsname=u.Goodsname)}}'">撤销</button>
-      <button type="submit" class="btn btn-primary " >查看中签信息</button></div>
+      <button type="submit" class="btn btn-primary " onclick="location='{{url_for('admin.download', goodsid=u.id)}}'">查看中签信息</button></div>
         
   </a>
     {% endfor %}

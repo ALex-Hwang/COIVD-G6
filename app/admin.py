@@ -5,6 +5,9 @@ from app.models import WareHouse
 from app.models import GoodsInfo
 from app.models import OrderInfo
 from app.models import Complaint
+from app.models import user
+import flask_excel as excel
+from sqlalchemy import func
 
 admin = Blueprint('admin', __name__)
 
@@ -127,3 +130,48 @@ def processComplaint(complaintid):
     complaint.ComplaintState = 1
     db.session.commit()
     return redirect(url_for('admin.complain_deal')) 
+
+@admin.route("/download/<goodsid>")
+def download(goodsid):
+    good = GoodsInfo.query.filter(GoodsInfo.id==goodsid).first() # 相对应的物资
+# 检查是否到达抽签时间
+    curdate = time.strftime("%Y-%m-%d", time.localtime())
+    ddl = GoodsInfo.query.filter(GoodsInfo.id==goodsid).first()
+    if curdate < str(ddl.DDL):
+        flash("抽签时候未到！")
+        return redirect(url_for('admin.view_win'))
+
+# 开始进行抽签工作
+    # 计算申领人数
+    count = OrderInfo.query.filter(OrderInfo.GoodsID==goodsid).count()
+    count = db.session.query(func.count(OrderInfo.id)).filter(OrderInfo.GoodsID==goodsid).scalar()
+    # 进行Excel准备
+    q = db.session.query(
+        OrderInfo.userid.label('用户编号'),
+        OrderInfo.id.label('订单编号'),
+        user.name.label('姓名'),
+        user.email.label('邮箱'),
+        user.address.label('地址')
+    )
+    if count == 0: # 目前无人申领
+        flash("目前还没有人申领！")
+        return redirect(url_for('admin.view_win'))
+    elif count <= good.OrderLimit: # 如果人数小于限制人数 则全部抽取
+        query_sets = q.filter(OrderInfo.OrderState==1).filter(user.id==OrderInfo.userid)\
+        .filter(OrderInfo.GoodsID==goodsid).all()
+    else: # 如果人数大于限制 则进行抽签
+        query_sets = q.filter(OrderInfo.OrderState==1).filter(user.id==OrderInfo.userid)\
+        .filter(OrderInfo.GoodsID==goodsid).order_by(func.random()).limit(good.OrderLimit).all()
+
+    return excel.make_response_from_query_sets(
+        query_sets,
+        column_names=[
+            '用户编号',
+            '订单编号',
+            '姓名',
+            '邮箱',
+            '地址'
+        ],
+        file_type='xlsx',
+        file_name='中签信息.xlsx'
+    )

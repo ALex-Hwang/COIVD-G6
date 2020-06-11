@@ -9,9 +9,9 @@ class GoodsInfo(db.Model):
     __tablename__  = 'GoodsInfo'
     id = db.Column(db.String(32), default=gen_id, primary_key=True)
     Goodsname = db.Column(db.String(30))
-    OrderLimit = db.Column(db.Integer, nullable=False, unique=True)
-    OrderLimitPerPerson = db.Column(db.Integer, nullable=False, unique=True)
-    DDL = db.Column(db.Date, nullable=False, unique=True)
+    OrderLimit = db.Column(db.Integer, nullable=False)
+    OrderLimitPerPerson = db.Column(db.Integer, nullable=False)
+    DDL = db.Column(db.Date, nullable=False)
 
     def __repr__(self):
         return '<Goods %r>' % self.GoodsName

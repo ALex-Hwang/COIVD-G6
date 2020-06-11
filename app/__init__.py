@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
+import flask_excel as excel
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -10,6 +11,4 @@ db = SQLAlchemy(app)
 
 from app import models, views
 
-@app.route('/', methods=['GET', 'POST'])
-def test():
-    return render_template('supply.html', amount = models.GoodsInfo.query.count(), goods = models.GoodsInfo.query.all())
+excel.init_excel(app)
