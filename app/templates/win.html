@@ -4,13 +4,10 @@
 <div class="offset-1">
 <ul class="nav nav-pills">
   <li class="nav-item">
-    <a class="nav-link" href="{{url_for('supply')}}">申领进行中</a>
+    <a class="nav-link" href="{{url_for('user.supply')}}">申领进行中</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="{{url_for('user.required')}}">已申领</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{{url_for('user.norequire')}}">未申领</a>
   </li>
   <li class="nav-item">
     <a class="nav-link active" href="#">中签</a>
@@ -26,37 +23,26 @@
 
 <hr />
 <div class="col-3 offset-9">
-    <p class="font-weight-bold">物资数量：</p>
+    <p class="font-weight-bold">物资数量：{{amount}}</p>
 </div>
 <div class="col-10 offset-1" >
 <div class="list-group">
+  {% if amount>0 %}
+  {% for order in orders %}
   <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称1</h5>
+      <h5 class="mb-1">物资名称 {{ order.Goodsname }}</h5>
     </div>
-    <div><small>申领数量：？只</small></div>
-    <div><small>申领截至时间：</small></div>
-    <div> <small>当前状态：已收货/待发货/待收货</small></div>
+    <div><small>申领数量：{{ order.OrderNum }}只</small></div>
+    <div><small>申领时间：{{ order.CreateTime }}</small></div>
+    <div><small>中签！未发货</small></div>
       <hr />
+      <div class="offset-11"><button type="button" class="btn btn-success " data-toggle="modal" data-target="#{{order.id}}">取消</button></div>
   </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称2</h5>
-    </div>
-    <div><small>申领数量：？只</small></div>
-    <div><small>申领截至时间：</small></div>
-    <div> <small>当前状态：已收货/待发货/待收货</small></div>
-      <hr />
-  </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称3</h5>
-    </div>
-    <div><small>申领数量：？只</small></div>
-    <div><small>申领截至时间：</small></div>
-    <div> <small>当前状态：已收货/待发货/待收货</small></div>
-      <hr />
-  </a>
+  {% endfor %}
+  {% else %}
+  <h5 class="mb-1">当前没有刚刚中签的订单</h5>
+  {% endif %}
 </div>
     </div>
 {% endblock content %}
