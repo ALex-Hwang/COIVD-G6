@@ -10,9 +10,6 @@
     <a class="nav-link" href="{{url_for('user.required')}}">已申领</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{{url_for('user.norequire')}}">未申领</a>
-  </li>
-  <li class="nav-item">
     <a class="nav-link" href="{{url_for('user.win')}}">中签</a>
   </li>
     <li class="nav-item">
@@ -30,33 +27,71 @@
 </div>
 <div class="col-10 offset-1" >
 <div class="list-group">
+
+  {% if amount>0 %}
+  {% for order in orders %}
   <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称1</h5>
+      <h5 class="mb-1">物资名称 {{ order.Goodsname }}</h5>
     </div>
-    <div><small>每人领取数量：？只</small></div>
-    <div><small>申领截至时间：</small></div>
-    <div> <small>当前状态：待收货</small></div>
+    <div><small>申领数量：{{ order.OrderNum }}只</small></div>
+    <div><small>申领时间：{{ order.CreateTime }}</small></div>
       <hr />
+      <div class="offset-11">
+        <button type="button" class="btn btn-success " data-toggle="modal" data-target="#{{order.GoodsID +order.id}}">确认收货</button>
+        <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#{{order.id}}">取消订单</button>
+      </div>
+      
   </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称2</h5>
-    </div>
-    <div><small>每人领取数量：？只</small></div>
-    <div><small>申领截至时间：</small></div>
-    <div> <small>当前状态：待收货</small></div>
-      <hr />
-  </a>
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">物资名称3</h5>
-    </div>
-    <div><small>每人领取数量：？只</small></div>
-    <div><small>申领截至时间：</small></div>
-    <div> <small>当前状态：待收货</small></div>
-      <hr />
-  </a>
+
+  <form method="post">
+    <div class="modal fade" id="{{order.GoodsID +order.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">确认已经收到货物？</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+    
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary"  >确认</button>
+            <input type="hidden" id="-id" value="{{ order.id }}" name="-id">
+            <input type="hidden" id="id" value="" name="id">
+          </div>
+        </div>
+      </div>
+    </div>   
+    </form>
+
+  <form method="post">
+    <div class="modal fade" id="{{order.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">确定要取消该订单吗？</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+    
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary"  >确认</button>
+            <input type="hidden" id="id" value="{{ order.id }}" name="id">
+          </div>
+        </div>
+      </div>
+    </div>   
+    </form>
+  {% endfor %}
+  {% else %}
+  <h5 class="mb-1">当前没有任何订单</h5>
+  {% endif %}
 </div>
     </div>
 {% endblock content %}
