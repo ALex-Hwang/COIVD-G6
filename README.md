@@ -1,9 +1,11 @@
 # COVID project
-## Notice
-The basic layout of this project is constructed. You may follow the guidelines below to develop:
-1. templtates:
-All your html will go to the *templates* folder in the directory *app*. 
-2. database
-- You need to modify the *config.py* inorder to connect flask to your mysql.
-- The database schema should be included in the *models.py*.
-- Finally, run the *create_all.py* to initialize the database.
+## Instructions
+1. fork the project
+2. install reliablities
+3. configurate flask(depending on your system): change the FLASK_APP=app
+4. configure the mysql initialization(`config.py`)
+5. run the create_db.py
+6. run the flask
+
+## Notice:
+Due to the absense of login module, some user infomation need to be inserted directed into the database, follow the database schema in the `app/models.py`. You need to change the postfix of `/admin` and `/user` to jump between admin and user homepage.
