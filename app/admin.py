@@ -68,6 +68,11 @@ def delete(goodsname):
 
 @admin.route("/deleteGoodsInfo/<goodsname>", methods=('POST', 'GET'))
 def deleteGoodsInfo(goodsname):
+    u = OrderInfo.query.filter(OrderInfo.Goodsname==goodsname).first()
+    if u:
+        flash("已经有用户申请，不可撤销！")
+        return redirect(url_for('admin.view_win'))
+        
     g = GoodsInfo.query.filter(GoodsInfo.Goodsname==goodsname).first()
     p = WareHouse.query.filter(WareHouse.Goodsname==goodsname).first()
     p.number += g.OrderLimit
