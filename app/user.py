@@ -9,8 +9,8 @@ user = Blueprint('user', __name__)
 
 @user.route("/",methods=('GET', 'POST'))
 def supply():
-    if 'identity' in db.session:
-        NAME = db.session['name']
+    if 'identity' in session:
+        NAME = session['name']
         IDCARD = models.Users.query.filter_by(name=NAME).first().idcard
         G = models.GoodsInfo.query.filter(models.GoodsInfo.DDL >= datetime.utcnow()).all()
         G_amount = models.GoodsInfo.query.filter(models.GoodsInfo.DDL >= datetime.utcnow()).count()
@@ -56,8 +56,8 @@ def supply():
 
 @user.route("/received", methods=('GET', 'POST'))
 def received():
-    if 'identity' in db.session:
-        NAME = db.session['name']
+    if 'identity' in session:
+        NAME = session['name']
         IDCARD = models.Users.query.filter_by(name=NAME).first().idcard
         user_orders = models.OrderInfo.query.filter_by(userid=IDCARD, OrderState=3).all()
         user_orders_sum = models.OrderInfo.query.filter_by(userid=IDCARD, OrderState=3).count()
@@ -96,8 +96,8 @@ def received():
 
 @user.route("/can_require",methods=('GET', 'POST'))
 def can_require():
-    if 'identity' in db.session:
-        NAME = db.session['name']
+    if 'identity' in session:
+        NAME = session['name']
         IDCARD = models.Users.query.filter_by(name=NAME).first().idcard
         G = models.GoodsInfo.query.filter(models.GoodsInfo.DDL >= datetime.utcnow()).all()
         G_amount = models.GoodsInfo.query.filter(models.GoodsInfo.DDL >= datetime.utcnow()).count()
@@ -142,8 +142,8 @@ def can_require():
 
 @user.route("/required")
 def required():
-    if 'identity' in db.session:
-        NAME = db.session['name']
+    if 'identity' in session:
+        NAME = session['name']
         IDCARD = models.Users.query.filter_by(name=NAME).first().idcard
         user_orders = models.OrderInfo.query.filter_by(userid=IDCARD).all()
         user_orders_sum = models.OrderInfo.query.filter_by(userid=IDCARD).count()
@@ -165,8 +165,8 @@ def delete(orderid):
 
 @user.route("/win")
 def win():
-    if 'identity' in db.session:
-        NAME = db.session['name']
+    if 'identity' in session:
+        NAME = session['name']
         IDCARD = models.Users.query.filter_by(name=NAME).first().idcard
         user_orders = models.OrderInfo.query.filter_by(userid=IDCARD, OrderState=1).all()
         user_orders_sum = models.OrderInfo.query.filter_by(userid=IDCARD, OrderState=1).count()
@@ -177,8 +177,8 @@ def win():
 
 @user.route("/wait_receive", methods=('GET', 'POST'))
 def wait_receive():
-    if 'identity' in db.session:
-        NAME = db.session['name']
+    if 'identity' in session:
+        NAME = session['name']
         IDCARD = models.Users.query.filter_by(name=NAME).first().idcard
         user_orders = models.OrderInfo.query.filter_by(userid=IDCARD, OrderState=2).all()
         user_orders_sum = models.OrderInfo.query.filter_by(userid=IDCARD, OrderState=2).count()
