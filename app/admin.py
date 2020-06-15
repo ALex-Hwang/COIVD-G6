@@ -152,9 +152,9 @@ def download(goodsid):
     q = db.session.query(
         OrderInfo.userid.label('用户编号'),
         OrderInfo.id.label('订单编号'),
-        user.name.label('姓名'),
-        user.email.label('邮箱'),
-        user.address.label('地址')
+        Users.name.label('姓名'),
+        Users.email.label('邮箱'),
+        Users.address.label('地址')
     )
     if count == 0: # 目前无人申领
         flash("目前还没有人申领！")
@@ -162,11 +162,11 @@ def download(goodsid):
     elif count <= good.OrderLimit: # 如果人数小于限制人数 则全部抽取
         OrderInfo.query.filter(OrderInfo.GoodsID==goodsid, OrderInfo.OrderState==0).update({"OrderState": 1})
         db.session.commit()
-        query_sets = q.filter(OrderInfo.OrderState==1).filter(user.id==OrderInfo.userid)\
+        query_sets = q.filter(OrderInfo.OrderState==1).filter(Users.idcard==OrderInfo.userid)\
         .filter(OrderInfo.GoodsID==goodsid).all()
     else: # 如果人数大于限制 则进行抽签
         OrderInfo.query.filter(OrderInfo.GoodsID==goodsid, OrderInfo.OrderState==0).limit(good.OrderLimit).update({"OrderState": 1})
-        query_sets = q.filter(OrderInfo.OrderState==1).filter(user.id==OrderInfo.userid)\
+        query_sets = q.filter(OrderInfo.OrderState==1).filter(Users.idcard==OrderInfo.userid)\
         .filter(OrderInfo.GoodsID==goodsid).order_by(func.random()).limit(good.OrderLimit).all()
 
     return excel.make_response_from_query_sets(
