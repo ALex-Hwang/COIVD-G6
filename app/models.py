@@ -19,7 +19,7 @@ class GoodsInfo(db.Model):
 class OrderInfo(db.Model):
     __tablename__ = 'OrderInfo'
     id = db.Column(db.String(32), default=gen_id, primary_key=True)
-    userid = db.Column(db.Integer, db.ForeignKey('user.id')) # The IDNumber of the applicant
+    userid = db.Column(db.Integer, db.ForeignKey('Users.idcard')) # The IDNumber of the applicant
     GoodsID = db.Column(db.String(32), db.ForeignKey('GoodsInfo.id'))
     Goodsname = db.Column(db.String(30))
     OrderNum = db.Column(db.Integer, nullable=False)
@@ -34,19 +34,26 @@ class OrderInfo(db.Model):
     def __repr__(self):
         return '<Goods %r>' % self.id
 
-class user(db.Model):
+class Users(db.Model):
     __tablename__ = 'user'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(40), nullable=False)
-    pwd = db.Column(db.String(20), nullable=False)
-    phone = db.Column(db.String(20))
-    email = db.Column(db.String(50))
-    college = db.Column(db.String(30))
-    idcard = db.Column(db.String(20))
-    address = db.Column(db.String(100))
+    name = db.Column(db.String(40), unique=True, nullable=False)
+    pwd = db.Column(db.String(20), unique=True, nullable=False)
+    phone = db.Column(db.String(20), unique=True, index=True)
+    email = db.Column(db.String(50), unique=True, index=True)
+    idcard = db.Column(db.String(20), unique=True, index=True,primary_key=True)
+    address = db.Column(db.String(100), unique=True, index=True)
+    province = db.Column(db.String(10), unique=True, index=True)
+    username = db.Column(db.String(20), unique=True, index=True)
 
-    def __repr__(self):
-        return '<user %r>' % self.id
+    def __init__(self, name, pwd, phone, email, idcard, address, province,username):
+        self.name = name
+        self.pwd = pwd
+        self.phone = phone
+        self.email = email
+        self.idcard = idcard
+        self.address = address
+        self.province = province
+        self.username=username
 
 class admin(db.Model):
     __tablename__ = 'admin'
