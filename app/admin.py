@@ -165,7 +165,7 @@ def download(goodsid):
         query_sets = q.filter(OrderInfo.OrderState==1).filter(user.id==OrderInfo.userid)\
         .filter(OrderInfo.GoodsID==goodsid).all()
     else: # 如果人数大于限制 则进行抽签
-        OrderInfo.query.filter(OrderInfo.GoodsID==goodsid, OrderInfo.OrderState==0).update({"OrderState": 1})
+        OrderInfo.query.filter(OrderInfo.GoodsID==goodsid, OrderInfo.OrderState==0).limit(good.OrderLimit).update({"OrderState": 1})
         query_sets = q.filter(OrderInfo.OrderState==1).filter(user.id==OrderInfo.userid)\
         .filter(OrderInfo.GoodsID==goodsid).order_by(func.random()).limit(good.OrderLimit).all()
 
