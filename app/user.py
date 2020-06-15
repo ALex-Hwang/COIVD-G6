@@ -56,7 +56,7 @@ def supply():
 
 @user.route("/received", methods=('GET', 'POST'))
 def received():
-    if 'identity' in session:
+    if 'identity' in db.session:
         NAME = db.session['name']
         IDCARD = models.Users.query.filter_by(name=NAME).first().idcard
         user_orders = models.OrderInfo.query.filter_by(userid=IDCARD, OrderState=3).all()
@@ -142,7 +142,7 @@ def can_require():
 
 @user.route("/required")
 def required():
-    if 'identity' in session:
+    if 'identity' in db.session:
         NAME = db.session['name']
         IDCARD = models.Users.query.filter_by(name=NAME).first().idcard
         user_orders = models.OrderInfo.query.filter_by(userid=IDCARD).all()
@@ -165,7 +165,7 @@ def delete(orderid):
 
 @user.route("/win")
 def win():
-    if 'identity' in session:
+    if 'identity' in db.session:
         NAME = db.session['name']
         IDCARD = models.Users.query.filter_by(name=NAME).first().idcard
         user_orders = models.OrderInfo.query.filter_by(userid=IDCARD, OrderState=1).all()
@@ -177,7 +177,7 @@ def win():
 
 @user.route("/wait_receive", methods=('GET', 'POST'))
 def wait_receive():
-    if 'identity' in session:
+    if 'identity' in db.session:
         NAME = db.session['name']
         IDCARD = models.Users.query.filter_by(name=NAME).first().idcard
         user_orders = models.OrderInfo.query.filter_by(userid=IDCARD, OrderState=2).all()
