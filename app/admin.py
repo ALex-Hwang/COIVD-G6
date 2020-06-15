@@ -9,11 +9,11 @@ from app.models import user
 import flask_excel as excel
 from sqlalchemy import func
 
-admin = Blueprint('admin', __name__)
+admin = Blueprint('goods_admin', __name__)
 
 @admin.route("/")
 def adminfirst():
-    return render_template('admin/admin_open.html')
+    return render_template('admin_open.html')
 
 
 @admin.route("/admin_open", methods=('GET', 'POST'))
@@ -28,10 +28,10 @@ def admin_open():
         o = WareHouse.query.filter(WareHouse.Goodsname==goodsname).first()
         if int(Sum) > o.number:
             flash("数量大于库存量，请重新输入!")
-            return render_template('admin/admin_open.html', goods=goods)
+            return render_template('admin_open.html', goods=goods)
         if int(Sum) < int(number):
             flash("个人申领数量大于可申领总数，请重新输入！")
-            return render_template('admin/admin_open.html', goods=goods)
+            return render_template('admin_open.html', goods=goods)
         if g:
             flash("该物资已经发布，添加数量成功！")
             g.OrderLimit += int(Sum)
@@ -39,30 +39,30 @@ def admin_open():
             if o.number == 0: # when the number is zero.
                 db.session.delete(o)
             db.session.commit()
-            return render_template('admin/admin_open.html', goods=goods)
+            return render_template('admin_open.html', goods=goods)
         newObj = GoodsInfo(Goodsname=goodsname, OrderLimit=Sum, OrderLimitPerPerson = number, DDL=deadline)
         db.session.add(newObj)
         o.number -= int(Sum)
         db.session.commit()
-        return render_template('admin/admin_open.html', goods=goods)
-    return render_template('admin/admin_open.html', goods=goods)
+        return render_template('admin_open.html', goods=goods)
+    return render_template('admin_open.html', goods=goods)
 
 @admin.route("/view_win")
 def view_win():
     goods = GoodsInfo.query.all();
-    return render_template('admin/view_win.html', goods=goods)
+    return render_template('view_win.html', goods=goods)
 
 @admin.route("/deleteWare/<goodsname>", methods=('POST', 'GET'))
 def delete(goodsname):
     g = GoodsInfo.query.filter(GoodsInfo.Goodsname==goodsname).first()
     if g:
         flash("该物资已经发布，无法删除！", category='warning')
-        return redirect(url_for('admin.admin_open'))
+        return redirect(url_for('goods_admin.admin_open'))
     d = WareHouse.query.filter(WareHouse.Goodsname==goodsname).first()
     db.session.delete(d)
     db.session.commit()
     flash("删除成功")
-    return redirect(url_for('admin.admin_open'))
+    return redirect(url_for('goods_admin.admin_open'))
 
 
 @admin.route("/deleteGoodsInfo/<goodsname>", methods=('POST', 'GET'))
@@ -70,7 +70,7 @@ def deleteGoodsInfo(goodsname):
     u = OrderInfo.query.filter(OrderInfo.Goodsname==goodsname).first()
     if u:
         flash("已经有用户申请，不可撤销！")
-        return redirect(url_for('admin.view_win'))
+        return redirect(url_for('goods_admin.view_win'))
         
     g = GoodsInfo.query.filter(GoodsInfo.Goodsname==goodsname).first()
     p = WareHouse.query.filter(WareHouse.Goodsname==goodsname).first()
@@ -78,13 +78,13 @@ def deleteGoodsInfo(goodsname):
     db.session.delete(g)
     db.session.commit()
     flash("删除成功")
-    return redirect(url_for('admin.view_win'))
+    return redirect(url_for('goods_admin.view_win'))
 
 
 @admin.route("/complain_deal") # 投诉处理
 def complain_deal():
     complaints = Complaint.query.filter(Complaint.ComplaintState==0)
-    return render_template('admin/complain_deal.html', complaints=complaints)
+    return render_template('complain_deal.html', complaints=complaints)
 
 @admin.route("/putin", methods=('GET', 'POST'))
 def putin():

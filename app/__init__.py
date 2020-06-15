@@ -28,7 +28,6 @@ def test():
         if int(sums) > orders.OrderLimit:
             flash("剩余数量不足！")
             return render_template('supply.html', amount=G_amount, goods=G)
-<<<<<<< HEAD
         if models.OrderInfo.query.filter_by(userid=1, GoodsID=goodsid,OrderState=0).first():
             flash("您已申领过该物资，不可重复申领")
             return render_template('supply.html', amount=G_amount, goods=G)
@@ -43,10 +42,8 @@ def test():
             return render_template('supply.html', amount=G_amount, goods=G)
         if int(sums) <= 0:
             flash("申领数量应该为正整数")
-=======
         if models.OrderInfo.query.filter_by(idcards=idcards, GoodsID=goodsid).first():
             flash("该身份证持有者已申领过同类物品，不可重复申领")
->>>>>>> d53ea7a016feaafb45a489b717c0152b2a7b08fd
             return render_template('supply.html', amount=G_amount, goods=G)
         newobj = models.OrderInfo(userid=1, GoodsID=goodsid, Goodsname=orders.Goodsname, idcards=idcards, username=name, address=address, OrderNum=sums, CreateTime = datetime.utcnow(), OrderState=0)
         db.session.add(newobj)

@@ -20,16 +20,16 @@
 			<a class="nav-link active" href="#">发布申领入口</a>
 		  </li>
 		  <li class="nav-item">
-			<a class="nav-link" href="{{url_for('admin.view_win')}}">查看中签信息</a>
+			<a class="nav-link" href="{{url_for('goods_admin.view_win')}}">查看中签信息</a>
 		  </li>
 		  <li class="nav-item">
-			<a class="nav-link" href="{{url_for('admin.complain_deal')}}">投诉处理</a>
+			<a class="nav-link" href="{{url_for('goods_admin.complain_deal')}}">投诉处理</a>
 		  </li>
 		  <li class="nav-item">
-    <a class="nav-link" href="{{url_for('admin.putin')}}">物资入库</a>
+    <a class="nav-link" href="{{url_for('goods_admin.putin')}}">物资入库</a>
   </li>
     <li class="nav-item">
-    <a class="nav-link" href="{{url_for('admin.sent_deal')}}">订单管理</a>
+    <a class="nav-link" href="{{url_for('goods_admin.sent_deal')}}">订单管理</a>
     </li>
 </ul>
 </div>
@@ -48,7 +48,7 @@
   <div><h6 class="mb-1">用途：{{u.usage}}</h6></div>
       <hr />
       <div class="offset-10">
-			  <button type="button" class="btn btn-danger " onclick="location='{{url_for('admin.delete', goodsname=u.Goodsname)}}'">删除</button>
+			  <button type="button" class="btn btn-danger " onclick="location='{{url_for('goods_admin.delete', goodsname=u.Goodsname)}}'">删除</button>
 		<button type="button" class="btn btn-success " data-toggle="modal" data-target="#{{u.Goodsname}}">发布</button>
       </div>
   </a>

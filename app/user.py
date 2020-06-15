@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy import func
 
-user = Blueprint('user', __name__)
+user = Blueprint('goods_user', __name__)
 
 
 @user.route("/",methods=('GET', 'POST'))
@@ -24,7 +24,6 @@ def supply():
         if int(sums) > orders.OrderLimit:
             flash("剩余数量不足！")
             return render_template('supply.html', amount=G_amount, goods=G)
-<<<<<<< HEAD
         if models.OrderInfo.query.filter_by(userid=1, GoodsID=goodsid, OrderState=0).first():
             flash("您已申领过该物资，不可重复申领")
             return render_template('supply.html', amount=G_amount, goods=G)
@@ -42,12 +41,10 @@ def supply():
             return render_template('supply.html', amount=G_amount, goods=G)
         newobj = models.OrderInfo(userid=1, GoodsID=goodsid, Goodsname=orders.Goodsname, idcards=idcards, username=name,
                                   address=address, OrderNum=sums, CreateTime=datetime.utcnow(), OrderState=0)
-=======
         if models.OrderInfo.query.filter_by(idcards=idcards, GoodsID=goodsid).first():
             flash("该身份证持有者已申领过同类物品，不可重复申领")
             return render_template('supply.html', amount=G_amount, goods=G)
         newobj = models.OrderInfo(userid=1, GoodsID=goodsid, Goodsname=orders.Goodsname, idcards=idcards, username=name, address=address, OrderNum=sums, CreateTime = datetime.utcnow(), OrderState=0)
->>>>>>> d53ea7a016feaafb45a489b717c0152b2a7b08fd
         db.session.add(newobj)
         db.session.commit()
         return render_template('supply.html', amount=G_amount, goods=G)
@@ -105,7 +102,6 @@ def can_require():
         if int(sums) > orders.OrderLimit:
             flash("剩余数量不足！")
             return render_template('supply.html', amount=G_amount, goods=G)
-<<<<<<< HEAD
         if models.OrderInfo.query.filter_by(userid=1, GoodsID=goodsid,OrderState=0).first():
             flash("您已申领过该物资，不可重复申领")
             return render_template('supply.html', amount=G_amount, goods=G)
@@ -123,12 +119,10 @@ def can_require():
             return render_template('supply.html', amount=G_amount, goods=G)
         newobj = models.OrderInfo(userid=1, GoodsID=goodsid, Goodsname=orders.Goodsname, idcards=idcards, username=name,
                                   address=address, OrderNum=sums, CreateTime=datetime.utcnow(), OrderState=0)
-=======
         if models.OrderInfo.query.filter_by(idcards=idcards, GoodsID=goodsid).first():
             flash("该身份证持有者已申领过同类物品，不可重复申领")
             return render_template('supply.html', amount=G_amount, goods=G)
         newobj = models.OrderInfo(userid=1, GoodsID=goodsid, Goodsname=orders.Goodsname, idcards=idcards, username=name, address=address, OrderNum=sums, CreateTime = datetime.utcnow(), OrderState=0)
->>>>>>> d53ea7a016feaafb45a489b717c0152b2a7b08fd
         db.session.add(newobj)
         db.session.commit()
         flash("提交申领成功")
@@ -148,8 +142,8 @@ def delete(orderid):
         db.session.delete(g)
         db.session.commit()
         flash("取消申领成功")
-        return redirect(url_for('user.required'))
-    return redirect(url_for('user.required'))
+        return redirect(url_for('goods_user.required'))
+    return redirect(url_for('goods_user.required'))
 
 @user.route("/win")
 def win():
