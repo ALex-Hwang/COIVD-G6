@@ -37,11 +37,10 @@
     <div><small>申领时间：{{ order.CreateTime }}</small></div>
     <div><small>中签！未发货</small></div>
       <hr />
-      <div class="offset-11"><button type="button" class="btn btn-success " data-toggle="modal" data-target="#{{order.id}}">取消</button></div>
   </a>
   {% endfor %}
   {% else %}
-  <h5 class="mb-1">当前没有刚刚中签的订单</h5>
+  <h5 class="mb-1">当前没有中签未发货的订单</h5>
   {% endif %}
 </div>
     </div>

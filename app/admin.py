@@ -11,7 +11,6 @@ from sqlalchemy import func
 
 admin = Blueprint('admin', __name__)
 
-
 @admin.route("/")
 def adminfirst():
     return render_template('admin/admin_open.html')
@@ -148,7 +147,6 @@ def download(goodsid):
 
 # 开始进行抽签工作
     # 计算申领人数
-    count = OrderInfo.query.filter(OrderInfo.GoodsID==goodsid).count()
     count = db.session.query(func.count(OrderInfo.id)).filter(OrderInfo.GoodsID==goodsid).scalar()
     # 进行Excel准备
     q = db.session.query(
@@ -162,9 +160,12 @@ def download(goodsid):
         flash("目前还没有人申领！")
         return redirect(url_for('admin.view_win'))
     elif count <= good.OrderLimit: # 如果人数小于限制人数 则全部抽取
+        OrderInfo.query.filter(OrderInfo.GoodsID==goodsid, OrderInfo.OrderState==0).update({"OrderState": 1})
+        db.session.commit()
         query_sets = q.filter(OrderInfo.OrderState==1).filter(user.id==OrderInfo.userid)\
         .filter(OrderInfo.GoodsID==goodsid).all()
     else: # 如果人数大于限制 则进行抽签
+        OrderInfo.query.filter(OrderInfo.GoodsID==goodsid, OrderInfo.OrderState==0).update({"OrderState": 1})
         query_sets = q.filter(OrderInfo.OrderState==1).filter(user.id==OrderInfo.userid)\
         .filter(OrderInfo.GoodsID==goodsid).order_by(func.random()).limit(good.OrderLimit).all()
 
